@@ -145,7 +145,7 @@ export function DownloadResumeButton() {
 		const contactInfo = `${resumeData.basics.email} · ${resumeData.basics.phone} · ${resumeData.basics.location}`
 		addText(contactInfo, margin, y, { fontSize: 9, color: mutedForeground })
 		y += 4
-		const links = `${resumeData.basics.site} · ${resumeData.basics.github}`
+		const links = `remcostoeten.nl · ${resumeData.basics.github}`
 		addText(links, margin, y, { fontSize: 9, color: mutedForeground })
 		y += 10
 
@@ -206,7 +206,7 @@ export function DownloadResumeButton() {
 				checkPageBreak(10)
 				// Bold tech keywords matching frontend
 				const boldedBullet = bullet.replace(
-					/(Next\.js|TypeScript|React Query|React|GraphQL|Django|JavaScript|SCSS|Laravel|WCAG AA|Magento 2|PHTML|BEM|Razor|Shape Up)/g,
+					/(Next\.js|TypeScript|React Query|React|GraphQL|JavaScript|SCSS|Laravel|WCAG AA|Magento 2|PHTML|BEM|Razor|Shape Up|Hono|PostgreSQL)/g,
 					'$1'
 				)
 				const bulletLines = doc.splitTextToSize(boldedBullet, contentWidth - 6)
@@ -226,15 +226,11 @@ export function DownloadResumeButton() {
 		addSectionHeader('Skills')
 
 		const skillCategories: { key: keyof typeof resumeData.skills; label: string }[] = [
-			{ key: 'languages', label: 'Languages' },
-			{ key: 'frameworks', label: 'Frameworks' },
+			{ key: 'frontend', label: 'Frontend' },
 			{ key: 'backend', label: 'Backend' },
-			{ key: 'databases', label: 'Databases' },
 			{ key: 'tools', label: 'Tools' },
-			{ key: 'styling', label: 'Styling' },
-			{ key: 'design', label: 'Design' },
-			{ key: 'ai', label: 'AI' },
-			{ key: 'misc', label: 'Miscellaneous' }
+			{ key: 'apis', label: 'APIs' },
+			{ key: 'testing', label: 'Testing' }
 		]
 
 		const labelWidth = 22
@@ -242,11 +238,13 @@ export function DownloadResumeButton() {
 			'TypeScript',
 			'React',
 			'Next.js',
+			'Node.js',
 			'PostgreSQL',
 			'Git',
 			'Docker',
-			'Tailwind',
-			'Node.js'
+			'Vercel',
+			'Tauri',
+			'Hono'
 		]
 
 		skillCategories.forEach(({ key, label }) => {
@@ -254,10 +252,10 @@ export function DownloadResumeButton() {
 			addText(`${label}:`, margin, y, { fontSize: 9, fontStyle: 'bold', color: foreground })
 
 			// Highlight key skills like frontend
-			const skillsWithHighlight = resumeData.skills[key].map((skill) =>
-				keySkills.includes(skill) ? skill : skill
+			const skillsWithHighlight = resumeData.skills[key]?.map((skill) =>
+				keySkills?.includes(skill) ? skill : skill
 			)
-			const skillsText = skillsWithHighlight.join(' · ')
+			const skillsText = skillsWithHighlight?.join(' · ')
 			const skillLines = doc.splitTextToSize(skillsText, contentWidth - labelWidth)
 			skillLines.forEach((line: string, index: number) => {
 				addText(line, margin + labelWidth, y, { fontSize: 9, color: mutedForeground })
@@ -275,7 +273,10 @@ export function DownloadResumeButton() {
 
 		addSectionHeader('Projects')
 
-		resumeData.projects.forEach((project) => {
+		// Filter to only main projects (exclude UI components)
+	const mainProjects = resumeData.projects.filter(p => p.category !== 'ui-component')
+
+	mainProjects.forEach((project) => {
 			checkPageBreak(15)
 
 			// Project name with category badge
@@ -289,8 +290,11 @@ export function DownloadResumeButton() {
 			addText(projectTitle, margin, y, { fontSize: 10, fontStyle: 'bold', color: foreground })
 			y += 4
 
+			// Use project description from data
+			const projectDesc = project.desc
+
 			// Description with bold keywords matching frontend
-			const boldedDesc = project.desc.replace(
+			const boldedDesc = projectDesc.replace(
 				/(Tauri 2\.0|React|Markdown|GitHub|Vercel|NPM|Google Calendar|Discord|Spotify|Next\.js|Drizzle ORM|syntax-highlighted|interactive)/gi,
 				'$1'
 			)
@@ -308,7 +312,7 @@ export function DownloadResumeButton() {
 		addSectionHeader('Education')
 
 		resumeData.education.forEach((edu) => {
-			checkPageBreak(10)
+			checkPageBreak(edu.description ? 15 : 10)
 			addText(`${edu.degree} — ${edu.institution}`, margin, y, {
 				fontSize: 9,
 				fontStyle: 'bold',
@@ -319,7 +323,17 @@ export function DownloadResumeButton() {
 				fontSize: 9,
 				color: mutedForeground
 			})
-			y += 6
+			y += 5
+
+			// Add description if available
+			if (edu.description) {
+				const descLines = doc.splitTextToSize(edu.description, contentWidth)
+				descLines.forEach((line: string) => {
+					addText(line, margin, y, { fontSize: 9, color: mutedForeground })
+					y += 4
+				})
+			}
+			y += 4
 		})
 
 		y += 6

@@ -1,9 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
-//import { GoogleAnalytics } from '@/components/analytics'
 import "@/styles/globals.css"
 
 // Structured data for SEO
@@ -50,9 +47,6 @@ const structuredData = {
     email: "stoetenremco.rs@gmail.com",
     telephone: "+31 6 36590707"
 }
-
-const geistSans = GeistSans.variable
-const geistMono = GeistMono.variable
 
 // <CHANGE> Complete SEO metadata for resume site
 export const metadata: Metadata = {
@@ -163,7 +157,7 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="en" className={`${geistSans} ${geistMono}`}>
+        <html lang="en">
             <head>
                 <script
                     type="application/ld+json"
@@ -172,7 +166,7 @@ export default function RootLayout({
                     }}
                 />
             </head>
-            <body className="py-12 font-sans antialiased">
+            <body className="py-12 font-helvetica antialiased">
                 {children}
                 <Analytics />
                 {/* Uncomment below and add your GA4 measurement ID to analytics.tsx */}

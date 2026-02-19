@@ -20,6 +20,7 @@ export interface Education {
 	institution: string
 	degree: string
 	period: string
+	description?: string
 }
 
 export interface Project {
@@ -32,15 +33,11 @@ export interface Project {
 }
 
 export interface Skills {
-	languages: string[]
-	frameworks: string[]
-	styling: string[]
+	frontend: string[]
 	backend: string[]
-	databases: string[]
 	tools: string[]
-	design: string[]
-	ai: string[]
-	misc: string[]
+	apis: string[]
+	testing: string[]
 }
 
 export interface Language {
@@ -70,10 +67,9 @@ export const resumeData: Resume = {
 		linkedin: 'https://linkedin.com/in/remco-stoeten'
 	},
 	summary: [
-		'Front-end engineer with a degree in **graphic design** and over eight years of experience across **B2B/B2C e-commerce, open-source govtech, large-scale SaaS, and e-learning**.',
-		'**Strong product mindset** with a focus on **performance, scalability, and user experience**.',
-		'Actively working with **AI**, both integrating APIs into products and leveraging AI to enhance **developer experience** and internal tooling.',
-		'Comfortable in **fully remote and hybrid environments**. Experienced with **Scrum, Kanban, Shape Up**, and autonomous teams.'
+		'Front-end engineer specialized in React, Next.js and TypeScript with a degree in **graphic design** and over eight years of experience across **B2B/B2C e-commerce, open-source govtech, large-scale SaaS, and e-learning**.',
+		'**Strong product mindset** with a focus on **performance, accessibility, and user experience**. Comfortable working remotely, in hybrid teams, and across methodologies like Scrum, Kanban, and Shape Up.',
+		'Actively integrating **AI APIs** into products and using AI to enhance **developer experience** and internal tooling.'
 	],
 	experience: [
 		{
@@ -82,6 +78,7 @@ export const resumeData: Resume = {
 			period: '2025 — Present',
 			bullets: [
 				'Building an e-learning platform with Next.js, TypeScript and React Query serving multiple educational institutions.',
+				'Actively promoting and pitching AI implementations and cutting-edge solutions to fix performance bottlenecks.',
 				'Delivering scoped features end-to-end under the Shape Up methodology in six-week cycles.',
 				'Integrating with a Laravel backend through a custom REST layer, coordinating across front-end and back-end teams.'
 			]
@@ -91,10 +88,11 @@ export const resumeData: Resume = {
 			role: 'Front End Developer',
 			period: '2023 — 2025',
 			bullets: [
-				'Worked on fully open-source government platforms used by multiple Dutch ministries and municipalities, built with React, GraphQL and Django.',
-				'Rebuilt the front-end of the FSV fraud detection platform, improving structure and maintainability.',
+				'Worked on fully open-source government platforms used by multiple Dutch ministries and municipalities, built with React + GraphQL.',
+				'Rebuilt the FSV (Fraude Signalering Voorziening) front-end from a monolithic CSS file into a custom SASS framework with variables, mixins and modular architecture for improved maintainability.',
 				'Helped maintain and extend a core intranet site builder relied on by government institutions across the Netherlands.',
-				'Brought existing applications in line with WCAG AA accessibility standards.'
+				'Brought existing applications in line with WCAG AA accessibility standards.',
+				'Actively promoted the migration to TypeScript and pitched architecture changes for state management and performance increase.'
 			]
 		},
 		{
@@ -102,7 +100,7 @@ export const resumeData: Resume = {
 			role: 'Software Developer',
 			period: '2022 — 2023',
 			bullets: [
-				'Rebuilt the complete webshop front-end using Razor, SCSS and JavaScript, improving page structure and UX.',
+				'Rebuilt legacy shop to a fully semantic, accessible, and modern ES6+ maintainable codebase.',
 				'Worked independently on React-based internal tools, shipping features from design to production.'
 			]
 		},
@@ -113,7 +111,7 @@ export const resumeData: Resume = {
 			bullets: [
 				'Built and maintained custom Magento 2 webshops for a range of B2B and B2C clients.',
 				'Handled front-end implementation across multiple projects, working with PHTML templates, BEM/SCSS and JavaScript.',
-				'Grew from a complete beginner — not even knowing what a div was — to a viable front-end position during our project meeting.'
+				'Grew from junior to a self-sufficient front-end developer over six years, taking increasing ownership of projects and client deliveries.'
 			]
 		}
 	],
@@ -121,26 +119,11 @@ export const resumeData: Resume = {
 		{
 			institution: 'ROC Friese Poort Sneek',
 			degree: 'Graphic Design Degree',
-			period: '2012 — 2016'
+			period: '2012 — 2016',
+			description: 'Focused on UI/UX and human-centered design, with the final two years and internships dedicated entirely to interactive web design.'
 		}
 	],
 	projects: [
-		{
-			name: 'Skriuw',
-			desc: 'Note-taking and productivity platform available as web app, PWA, or native desktop app (Tauri/Rust). Cloud, self-hosted, or fully offline. Block editor with wikilinks, BYOK for AI and database, daily notes, 25+ keyboard shortcuts, and deep customization. macOS, Windows, and Linux.',
-			link: 'https://skriuw.vercel.app',
-			github: 'https://github.com/remcostoeten/skriuw',
-			category: 'app',
-			note: 'In active development'
-		},
-		{
-			name: 'Dora',
-			desc: "High-performance, keyboard-centric database explorer built with Rust and Tauri. At ~8.5MB vs pgAdmin's ~400MB. Features query execution, data visualization, migration tooling, ORM schema generation, SSH tunneling, and a custom Go CLI for builds and releases. Fully offline, zero telemetry.",
-			link: 'https://doradb.vercel.app',
-			github: 'https://github.com/remcostoeten/dora',
-			category: 'app',
-			note: 'In active development'
-		},
 		{
 			name: 'Beautiful Code Block',
 			desc: 'React component for displaying syntax-highlighted code blocks with search, line numbers, and interactive features.',
@@ -152,34 +135,37 @@ export const resumeData: Resume = {
 			desc: 'React component for visualizing project folder structures with interactive tree views and customization options.',
 			link: 'https://beautiful-file-tree-v2.vercel.app',
 			category: 'ui-component'
+		},
+		{
+			name: 'Skriuw',
+			desc: 'Built a comprehensive note-taking app featuring a block editor, wikilinks, and AI integration. Delivers a native-like experience across web, PWA, and desktop with extensive keyboard shortcut support. Stack: Next.js, Rust (Tauri), Golang, TypeScript, Tailwind CSS.',
+			link: 'https://skriuw.vercel.app',
+			github: 'https://github.com/remcostoeten/skriuw',
+			category: 'app',
+			note: 'In active development'
+		},
+		{
+			name: 'Zentjes',
+			desc: 'Personal wealth, bill splitter, and finance tracker. Built with HonoJS, Next.js, Tailwind CSS, and PostgreSQL.',
+			link: 'https://zentjes.vercel.app',
+			category: 'app',
+			note: 'In active development'
+		},
+		{
+			name: 'Dora',
+			desc: 'A sub-10MB, performant database client built with React, Rust and Tauri. Features a spreadsheet-like interface for PostgreSQL/SQLite/LibSQL that runs fully offline with zero telemetry on all operating systems.',
+			link: 'https://doradb.vercel.app',
+			github: 'https://github.com/remcostoeten/dora',
+			category: 'app',
+			note: 'In active development'
 		}
 	],
 	skills: {
-		languages: [
-			'TypeScript',
-			'JavaScript',
-			'Shell (bash, fish, zsh)',
-			'Scripting (Python*, Lua)'
-		],
-		frameworks: ['React', 'Next.js', 'TanStack Start', 'SolidStart*', 'Qwik*', 'Svelte*'],
-		styling: ['CSS', 'SCSS/Less/Sass', 'Styled Components', 'Tailwind CSS'],
-		backend: ['Node.js', 'Hono', 'ElysiaJS', 'Express', 'Go*', 'Tauri/Rust*'],
-		databases: ['PostgreSQL', 'SQLite', 'LibSQL', 'Turso', 'Drizzle ORM', 'Prisma'],
-		tools: ['Git', 'Docker', 'Vite', 'pnpm', 'Bun', 'Linux', 'SSH', 'CLI/DX tooling'],
-		design: ['Figma', 'Photoshop'],
-		ai: ['API integration (Vercel AI SDK, OpenRouter)', 'Whatever tool fits the job best'],
-		misc: [
-			'Playwright',
-			'Vitest',
-			'GitHub Actions',
-			'Vercel',
-			'Cloudflare',
-			'GraphQL',
-			'REST',
-			'tRPC',
-			'Monorepos',
-			'WCAG/a11y'
-		]
+		frontend: ['TypeScript', 'React', 'Next.js', 'CSS (Tailwind, SCSS, Modules)'],	
+		backend: ['Node.js', 'Hono', 'PostgreSQL', 'SQLite', 'Drizzle ORM', 'Prisma', 'Serverless'],
+		apis: ['REST', 'GraphQL', 'tRPC'],
+		tools: ['Git', 'Docker', 'Unix', 'Shell', 'JS runtimes & package managers','CI/CD'],
+		testing: ['Playwright', 'Vitest', 'WCAG/a11y']
 	},
 	languages: [
 		{ name: 'Dutch', level: 'Native' },

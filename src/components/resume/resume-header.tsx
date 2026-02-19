@@ -2,7 +2,6 @@ import Link from "next/link"
 import { Mail, MapPin, Phone, Github, Linkedin, Globe } from "lucide-react"
 import { DownloadResumeButton } from "./download-resume-button"
 import { parseBold } from "@/lib/utils"
-import { SectionNav } from "./section-nav"
 import type { ResumeBasics } from "@/lib/resume-data"
 
 interface ResumeHeaderProps {
@@ -28,7 +27,6 @@ export function ResumeHeader({ basics, summary }: ResumeHeaderProps) {
                         {basics.title}
                     </h2>
                 </div>
-                <SectionNav />
             </div>
 
             <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
@@ -75,7 +73,7 @@ export function ResumeHeader({ basics, summary }: ResumeHeaderProps) {
                     className={externalLinkClass}
                 >
                     <Globe className="h-3.5 w-3.5" />
-                    Portfolio
+                    Site
                 </Link>
             </div>
 

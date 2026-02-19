@@ -8,7 +8,7 @@ interface ProjectsSectionProps {
 
 function boldKeywords(text: string) {
 	return text.replace(
-		/(Tauri 2\.0|React|Markdown|GitHub|Vercel|NPM|Google Calendar|Discord|Spotify|Next\.js|Drizzle ORM|syntax-highlighted|interactive)/gi,
+		/(Tauri 2\.0|Tauri|React|Markdown|GitHub|Vercel|NPM|Google Calendar|Discord|Spotify|Next\.js|HonoJS|Hono|PostgreSQL|Drizzle ORM|syntax-highlighted|interactive|Rust|Golang|TypeScript|Tailwind CSS|SCSS|SASS|CSS)/gi,
 		'<strong class="text-foreground font-semibold">$1</strong>'
 	)
 }
@@ -19,6 +19,12 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
 			<h3 className='text-xs font-bold uppercase tracking-widest text-foreground border-b border-foreground pb-1 mb-5'>
 				Hobby Projects
 			</h3>
+			<div className='mb-4 text-sm text-muted-foreground'>
+				<p>
+					In my free time, I do a lot of development and experiment with various tools and
+					languages, ranging from small UI components to full-stack applications.
+				</p>
+			</div>
 			<div className='space-y-4'>
 				{projects.map((project, index) => (
 					<div key={index} className='text-sm'>

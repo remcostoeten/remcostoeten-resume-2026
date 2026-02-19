@@ -6,15 +6,11 @@ interface SkillsSectionProps {
 }
 
 const skillCategories: { key: keyof Skills; label: string }[] = [
-	{ key: 'languages', label: 'Languages' },
-	{ key: 'frameworks', label: 'Frameworks' },
+	{ key: 'frontend', label: 'Frontend' },
 	{ key: 'backend', label: 'Backend' },
-	{ key: 'databases', label: 'Databases' },
+	{ key: 'apis', label: 'APIs' },
 	{ key: 'tools', label: 'Tools' },
-	{ key: 'styling', label: 'Styling' },
-	{ key: 'design', label: 'Design' },
-	{ key: 'ai', label: 'AI' },
-	{ key: 'misc', label: 'Misc' }
+	{ key: 'testing', label: 'Testing' }
 ]
 
 export function SkillsSection({ skills, languages }: SkillsSectionProps) {
