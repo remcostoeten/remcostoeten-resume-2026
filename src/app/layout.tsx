@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@/components/analytics"
 import "@/styles/globals.css"
 
 // Structured data for SEO
@@ -169,8 +169,6 @@ export default function RootLayout({
             <body className="py-12 font-helvetica antialiased">
                 {children}
                 <Analytics />
-                {/* Uncomment below and add your GA4 measurement ID to analytics.tsx */}
-                {/* <GoogleAnalytics /> */}
             </body>
         </html>
     )
