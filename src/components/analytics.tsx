@@ -1,44 +1,54 @@
 'use client'
 
-import { useEffect } from 'react'
+import * as RemcoSdk from '@remcostoeten/analytics'
 
-// Google Analytics - Uses environment variable
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID
+type EventMeta = RemcoSdk.EventMeta
 
-export function GoogleAnalytics() {
-	useEffect(() => {
-		// Only load GA in production and if ID is configured
-		if (
-			process.env.NODE_ENV === 'production' &&
-			GA_MEASUREMENT_ID &&
-			GA_MEASUREMENT_ID !== 'G-XXXXXXXXXX'
-		) {
-			// Load gtag.js script
-			const script = document.createElement('script')
-			script.async = true
-			script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
-			document.head.appendChild(script)
+type EventName = RemcoSdk.EventName
 
-			// Initialize gtag
-			window.dataLayer = window.dataLayer || []
-			window.gtag = function gtag() {
-				window.dataLayer.push(arguments)
-			}
-			window.gtag('js', new Date())
-			window.gtag('config', GA_MEASUREMENT_ID, {
-				page_title: document.title,
-				page_location: window.location.href
-			})
-		}
-	}, [])
+type EventPayload = RemcoSdk.EventPayload
 
-	return null
+type TrackFunc = (
+    name: EventName,
+    payload?: EventPayload,
+    meta?: EventMeta
+) => void
+
+let trackRef: TrackFunc | null | undefined
+
+function getTrack(): TrackFunc | null {
+    if (trackRef !== undefined) {
+        return trackRef
+    }
+
+    if ('track' in RemcoSdk && typeof RemcoSdk.track === 'function') {
+        trackRef = RemcoSdk.track as TrackFunc
+        return trackRef
+    }
+
+    trackRef = null
+    return null
 }
 
-// TypeScript declarations for gtag
-declare global {
-	interface Window {
-		dataLayer: any[]
-		gtag: (...args: any[]) => void
-	}
+export function trackEvent(name: EventName, payload?: EventPayload, meta?: EventMeta) {
+    const track = getTrack()
+
+    if (!track) {
+        return
+    }
+
+    try {
+        track(name, payload, meta)
+    } catch (error) {
+        console.error('analytics_track_error', error)
+    }
+}
+
+export function Analytics() {
+    const projectId = process.env.NEXT_PUBLIC_ANALYTICS_PROJECT_ID ?? 'resume-2026'
+    const ingestUrl =
+        process.env.NEXT_PUBLIC_ANALYTICS_INGEST_URL ??
+        'https://ingestion.remcostoeten.nl'
+
+    return <RemcoSdk.Analytics projectId={projectId} ingestUrl={ingestUrl} />
 }

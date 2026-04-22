@@ -3,6 +3,7 @@
 import { Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { resumeData } from '@/lib/resume-data'
+import { trackEvent } from '@/components/analytics'
 
 // Helper function to parse bold markdown and return segments for PDF
 function parseBoldForPDF(text: string): Array<{ text: string; bold: boolean }> {
@@ -346,6 +347,14 @@ export function DownloadResumeButton() {
 
 		// Save
 		doc.save('remco-stoeten-frontend-engineer-resume.pdf')
+		try {
+			trackEvent('resume_download', {
+				fileName: 'remco-stoeten-frontend-engineer-resume.pdf',
+				location: 'resume_page'
+			})
+		} catch (error) {
+			console.error('resume_download_track_error', error)
+		}
 	}
 
 	return (
