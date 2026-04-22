@@ -1,12 +1,12 @@
 'use client'
 
-import {
-    Analytics as RemcoAnalytics,
-    type EventMeta,
-    type EventName,
-    type EventPayload
-} from '@remcostoeten/analytics'
 import * as RemcoSdk from '@remcostoeten/analytics'
+
+type EventMeta = RemcoSdk.EventMeta
+
+type EventName = RemcoSdk.EventName
+
+type EventPayload = RemcoSdk.EventPayload
 
 type TrackFunc = (
     name: EventName,
@@ -14,27 +14,41 @@ type TrackFunc = (
     meta?: EventMeta
 ) => void
 
+let trackRef: TrackFunc | null | undefined
+
 function getTrack(): TrackFunc | null {
-    if ('track' in RemcoSdk && typeof RemcoSdk.track === 'function') {
-        return RemcoSdk.track as TrackFunc
+    if (trackRef !== undefined) {
+        return trackRef
     }
 
+    if ('track' in RemcoSdk && typeof RemcoSdk.track === 'function') {
+        trackRef = RemcoSdk.track as TrackFunc
+        return trackRef
+    }
+
+    trackRef = null
     return null
 }
 
 export function trackEvent(name: EventName, payload?: EventPayload, meta?: EventMeta) {
     const track = getTrack()
 
-    if (track) {
+    if (!track) {
+        return
+    }
+
+    try {
         track(name, payload, meta)
+    } catch (error) {
+        console.error('analytics_track_error', error)
     }
 }
 
 export function Analytics() {
-    return (
-        <RemcoAnalytics
-            projectId="resume-20226"
-            ingestUrl="https://ingestion.remcostoeten.nl"
-        />
-    )
+    const projectId = process.env.NEXT_PUBLIC_ANALYTICS_PROJECT_ID ?? 'resume-2026'
+    const ingestUrl =
+        process.env.NEXT_PUBLIC_ANALYTICS_INGEST_URL ??
+        'https://ingestion.remcostoeten.nl'
+
+    return <RemcoSdk.Analytics projectId={projectId} ingestUrl={ingestUrl} />
 }

@@ -347,10 +347,14 @@ export function DownloadResumeButton() {
 
 		// Save
 		doc.save('remco-stoeten-frontend-engineer-resume.pdf')
-		trackEvent('resume_download', {
-			fileName: 'remco-stoeten-frontend-engineer-resume.pdf',
-			location: 'resume_page'
-		})
+		try {
+			trackEvent('resume_download', {
+				fileName: 'remco-stoeten-frontend-engineer-resume.pdf',
+				location: 'resume_page'
+			})
+		} catch (error) {
+			console.error('resume_download_track_error', error)
+		}
 	}
 
 	return (
